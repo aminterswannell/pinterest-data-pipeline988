@@ -3,13 +3,13 @@ from airflow.providers.databricks.operators.databricks import DatabricksSubmitRu
 from datetime import datetime, timedelta 
 
 
-#Define params for Submit Run Operator
+#Define parameters for Submit Run Operator
 notebook_task = {
     'notebook_path': '/Users/alexminter98@gmail.com/databricks_tasks/pinterest_data_pipeline/databricks_tasks/mount_s3_to_db',
 }
 
 
-#Define params for Run Now Operator
+#Define parameters for Run Now Operator
 notebook_params = {
     "Variable":5
 }
@@ -26,9 +26,7 @@ default_args = {
 
 
 with DAG('129fb6ae3c55_dag',
-    # should be a datetime format
     start_date=datetime(2024, 12, 13),
-    # check out possible intervals, should be a string
     schedule_interval='@daily',
     catchup=False,
     default_args=default_args
@@ -37,7 +35,6 @@ with DAG('129fb6ae3c55_dag',
 
     opr_submit_run = DatabricksSubmitRunOperator(
         task_id='submit_run',
-        # the connection we set-up previously
         databricks_conn_id='databricks_default',
         existing_cluster_id='1108-162752-8okw8dgg',
         notebook_task=notebook_task
